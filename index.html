@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.item{
+			height: 100px;
+			width: 100px;
+			background:orange;
+			position: absolute;
+			top:0;
+			left:0;
+		}
+		h1{
+			font-size: 20px;
+			font-family: arial;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<button class="btn">Начать игру</button>
+	<h1>Набери более 20 очков за 10 секунд</h1>
+	<h1>Зелёные +1 балл. Красные -2 балла</h1>
+	<h1>Очки:<span class="score_number">0</span></h1>
+	<h1>Время:<span class="time_number">15</span></h1>
+	
+	<script type="text/javascript">
+		let time_elem = document.querySelector(".time_number");
+		let score_elem = document.querySelector(".score_number");
+		let btn = document.querySelector(".btn");
+		let int1;
+		let int2;
+		let time = 15;
+		btn.onclick = function (){
+			int1 = setInterval(createDuck, 500);
+
+			setTimeout(finish, 15000)
+			int2 = setInterval(timer, 1000)
+		}
+
+
+		function timer(){
+			time = time - 1;
+			time_elem.innerHTML = time;
+		}
+		function finish(){
+			clearInterval(int2)
+			clearInterval(int1)
+			if(score >= 15){
+				alert("победа")
+			}else{
+				alert("проигрыш")
+			}
+		}
+
+		function getRand(number){
+			let x = Math.random()* number;
+			let b = Math.round(x);
+			return b;
+		}
+
+		let arr = [200, 400, 600]
+		let colors = ["green", "red"]
+		let score = 0;
+
+		function createDuck(){
+			let duck = document.createElement("div");
+			document.body.appendChild(duck);
+			duck.classList.add("item");
+			duck.style.left = getRand(window.screen.width - 100) + "px";
+			duck.style.top = arr[getRand(2)] + "px";
+			let color_number = getRand(1);
+			duck.style.background = colors[color_number];
+
+			duck.onclick = function(){
+				duck.style.display = "none"
+				if(color_number ==0 ) {
+					score = score + 1;
+					score_elem.innerHTML = score;
+				}else if(color_number == 1){
+					score = score -2;
+					score_elem.innerHTML = score;
+				}
+
+			}
+		}
+
+
+
+	</script>
+
+</body>
+</html>
